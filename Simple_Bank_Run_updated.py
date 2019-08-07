@@ -1,15 +1,6 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 # Imports
 import random
 from matplotlib import pyplot as plt
-
-
-# In[2]:
 
 
 class Agent():
@@ -23,11 +14,6 @@ class Agent():
         self.patience = patient
         self.money = money 
         self.beliefs = belief
-    
-
-
-# In[40]:
-
 
 class Model():
     '''
@@ -49,15 +35,16 @@ class Model():
         '''
         self.agents = list()
         for i in range(N):
-            self.beliefs = (random.random()) 
+            #self.beliefs = (random.random()) 
             self.agents.append(Agent(True, belief = random.random()*0.5 + 0.5))
         
         # Make a variable to keep track of the number of impatient people
-        impatient_agents = list() 
-        for agent in self.agents:
-            if agent.patience == False:
-                impatient_agents.append(agent) # Adding them to the impatient_agenys list above
-        self.num_of_impatients = len(impatient_agents)
+        #impatient_agents = list() 
+        #for agent in self.agents:
+        #    if agent.patience == False:
+        #        impatient_agents.append(agent) # Adding them to the impatient_agenys list above
+        #self.num_of_impatients = len(impatient_agents)
+        self.num_of_impatients = 0
         
         
         # Keep a record of the model time
@@ -79,10 +66,11 @@ class Model():
         This function runs the model.
         '''
         for t in range(self.max_iterations):
+            qual_info = None # (unnecessary in python)
             if random.random() > 0.5:
                 qual_info = (random.random()) # Some random degree of bad quality information will be broadcasted at random time periods
             else:
-                pass
+                qual_info = 0
             '''
             In every timestep, for every patient agent (every agent), assuming  quality of bad information is greater than 0.5,
             their peception of the bad news reduces their degree of confidence by alpha 0.02 (large amount).
@@ -131,38 +119,24 @@ class Model():
             for agent in self.agents:
                 if agent.patience == False:
                     impatient_agents.append(agent)
-                    self.num_of_impatients = len(impatient_agents)
+            self.num_of_impatients = len(impatient_agents)
             self.impatient_agents.append(self.num_of_impatients)
             
-            print("Time period: ", self.time)
+            print(f"Time period: {self.time} ") # (using  python's new string formatting)
             print("Quality of information: ", qual_info)
             print("Number of impatient people: ", self.num_of_impatients)
     
 
-
-# In[41]:
-
-
 # Initialising the model with 100 agents and 0 degree of belief
 m = Model(100, 0)
-
-
-# In[42]:
 
 
 # Checking my agents attributes: they all begin patient, have some degree of confidence (above 0.5) and have no money. 
 for agent in m.agents:
     print(agent.patience, agent.beliefs, agent.money)
 
-
-# In[45]:
-
-
+# Running the model
 m.run()
-
-
-# In[49]:
-
 
 # Visualising the number of impatient agents
 timestep_no = range(len(m.impatient_agents))
@@ -173,10 +147,6 @@ plt.xlabel('Time Periods')
 plt.title('Transition from Patient to Impatient Agents')
 plt.show()
 
-
-# In[18]:
-
-
 # Visualising bank reserves rate of depletion over time
 timesteps = range(len(m.reserves_history))
 plt.figure(figsize=(15,10))
@@ -185,9 +155,6 @@ plt.ylabel('Bank Reserves')
 plt.xlabel('Time Periods')
 plt.title('Bank Run: The depletion of Reserves over time')
 plt.show()
-
-
-# In[17]:
 
 
 '''To check banks reserves decrease'''
