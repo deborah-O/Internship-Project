@@ -1,10 +1,10 @@
 # Internship-Project
 
 
-**Aim**
+**Aim:**
 To explore both the sources and dynamics of Bank Runs
 
-**Objectives**
+**Objectives:**
 - Investigate current literature on Bank Runs
 - Use literature to build framework for Bank Run ABM
 
